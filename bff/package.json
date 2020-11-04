@@ -47,7 +47,6 @@
     }
   },
   "dependencies": {
-    "typeorm-naming-strategies": "2.0.0",
     "@godaddy/terminus": "^4.2.1",
     "@nestjs/common": "7.4.4",
     "@nestjs/core": "7.4.4",
@@ -70,8 +69,10 @@
     "rxjs": "6.6.3",
     "swagger-ui-express": "^4.1.4",
     "typeorm": "0.2.28",
+    "typeorm-naming-strategies": "2.0.0",
     "typescript": "4.0.3",
-    "winston": "3.3.3"
+    "winston": "3.3.3",
+    "xlsx": "^0.16.8"
   },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
