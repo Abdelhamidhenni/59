@@ -1,4 +1,4 @@
-# BFF (Backend For Front) of Colibri app
+# BFF (Backend For Front) of 59 App
 
 This project implements BFF
 
@@ -11,7 +11,7 @@ This project implements BFF
 
 You should be able to test the API with Postman or Insomnia at url: [http://localhost:3000/api/](http://localhost:3000/api/)
 
-- Healthcheck: http://localhost:3000/api/healthcheck/
+- Healthcheck: http://localhost:3000/api/healthcheck
 - Swagger: http://localhost:3000/api/swagger/
 
 ## Available commands

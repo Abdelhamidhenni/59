@@ -1,0 +1,22 @@
+{
+  "name": "59",
+  "version": "0.0.1",
+  "description": "59 project Design4Green",
+  "license": "UNLICENSED",
+  "author": "59",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Abdelhamidhenni/59.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Abdelhamidhenni/59/issues"
+  },
+  "scripts": {
+    "setup:install": "cd client && yarn && cd ../bff && yarn && cd .."
+  },
+  "engines": {
+    "node": ">= 12.14.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

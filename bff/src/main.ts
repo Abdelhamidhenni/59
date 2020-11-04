@@ -72,11 +72,7 @@ async function bootstrap() {
   // ------------------------------------------------------
   // Start server
   // ------------------------------------------------------
-  const options = new DocumentBuilder()
-    .setTitle('SG Satisfaction BFF')
-    .setDescription('SG Satisfaction BFF for the Progressive Web Application (PWA) version')
-    .setVersion('1.0')
-    .build();
+  const options = new DocumentBuilder().setTitle('59 BFF').setDescription('59 BFF').setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(`${config.getGlobalPrefix()}/swagger`, app, document);
   await app.listen(config.getPort());
