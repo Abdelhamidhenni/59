@@ -14,8 +14,8 @@ function App() {
       <Suspense fallback={<CircularProgress />}>
         <AppHeader />
         <Container maxWidth="md" component="main">
-          <IndicatorsCard />
           <IndicatorsGlobal />
+          <IndicatorsCard />
         </Container>
       </Suspense>
     </div>
