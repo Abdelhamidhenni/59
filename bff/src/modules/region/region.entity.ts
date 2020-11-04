@@ -6,7 +6,7 @@ import { Department } from '../department/department.entity';
 export class Region {
   @ApiProperty()
   @PrimaryColumn()
-  id: number;
+  id: string;
 
   @ApiProperty()
   @Column()
