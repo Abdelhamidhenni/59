@@ -1,0 +1,14 @@
+.docz/
+.vscode/
+node_modules/
+.rpt2_cache/
+coverage/
+deployment/
+migrations/
+scripts/
+dist/
+lib/
+jest.config.js
+babel.config.js
+commitlint.config.js
+

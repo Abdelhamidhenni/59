@@ -1,0 +1,76 @@
+version: "2"
+services:
+  postgresql:
+    image: "postgres:11-alpine"
+    volumes:
+      - "./postgresql/scripts:/docker-entrypoint-initdb.d"
+    ports:
+      - "5432:5432"
+    command: ["postgres", "-c", "log_statement=all"]
+    environment:
+      - POSTGRES_DB=59
+      - POSTGRES_USER=59
+      - POSTGRES_PASSWORD=59
+      - "DEBUG=app:*"
+      - DEBUG_COLORS=true
+    depends_on: []
+  client:
+    image: "node:12-alpine"
+    user: node
+    environment:
+      - NODE_ENV=development
+      - "DEBUG=app:*"
+      - DEBUG_COLORS=true
+      - PORT=8080
+      - BROWSER=none
+      - CHOKIDAR_USEPOLLING=true
+    command: yarn start
+    volumes:
+      - "./client:/home/node/app:cached"
+    working_dir: /home/node/app
+    ports:
+      - "8080:8080"
+      - "9229:9229"
+      - "35729:35729"
+  bff:
+    image: node:12-alpine
+    user: node
+    command: "yarn start:dev"
+    working_dir: /home/node/app
+    ports:
+      - 3000:3000
+      - "9230:9230"
+    depends_on:
+      - postgresql
+    environment:
+      - NODE_ENV=development
+      - DEBUG_COLORS=true
+      - SERVER_PORT=3000
+      - LOG_CATEGORIES=REQUEST
+      - LOG_LEVEL=debug
+      - LOG_LABEL=BFF
+      - DB_HOST=postgresql
+      - DB_USERNAME=59
+      - DB_PASSWORD=59
+      - DB_DATABASE=59
+      - DB_SSL=false
+      - DB_PORT=5432
+      - DB_SYNCHRONIZE=false
+      - DB_LOGGING=true
+      - "DB_ENTITIES=src/**/**.entity{.ts,.js}"
+      - DB_MIGRATIONS=./migrations/*.ts
+      - DB_MIGRATIONS_DIR=./migrations
+      - DB_SEEDS=./seeds/*.ts
+      - DB_SEEDS_DIR=./seeds
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./bff:/home/node/app:cached
+  proxy:
+    image: "nginx:latest"
+    volumes:
+      - "./proxy/conf.d:/etc/nginx/conf.d:ro"
+    ports:
+      - "80:80"
+    depends_on:
+      - client
+      - bff
