@@ -3,6 +3,10 @@
 # dependencies
 /client/node_modules
 /bff/node_modules
+/client/package-lock.json
+/bff/package-lock.json
+/client/yarn.lock
+/bff/yarn.lock
 
 /.pnp
 .pnp.js

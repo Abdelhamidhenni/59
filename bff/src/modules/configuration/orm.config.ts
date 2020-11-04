@@ -1,4 +1,4 @@
-import { SnakeCaseNamingStrategy } from '@bsc/typeorm-utils';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const ormconfig: TypeOrmModuleOptions = {
@@ -13,5 +13,5 @@ export const ormconfig: TypeOrmModuleOptions = {
   entities: [process.env.DB_ENTITIES],
   synchronize: false,
   extra: { max: 10, min: 1, ssl: process.env.DB_SSL === 'true' || false },
-  namingStrategy: new SnakeCaseNamingStrategy(),
+  namingStrategy: new SnakeNamingStrategy(),
 };
