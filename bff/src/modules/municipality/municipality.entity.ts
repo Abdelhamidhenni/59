@@ -38,7 +38,7 @@ export class Municipality {
 
   @ApiProperty()
   @Column()
-  departmentId: number;
+  departmentId: string;
   @ManyToOne(() => Department)
   @JoinColumn()
   department?: Department;

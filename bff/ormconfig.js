@@ -15,6 +15,7 @@ module.exports = [
     synchronize: false,
     extra: { max: 10, min: 1, ssl: process.env.DB_SSL === 'true' || false },
     migrations: [process.env.DB_MIGRATIONS],
+    seeds: [process.env.DB_SEEDERS],
     cli: {
       migrationsDir: process.env.DB_MIGRATIONS_DIR,
     },

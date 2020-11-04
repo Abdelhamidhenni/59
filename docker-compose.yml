@@ -62,6 +62,7 @@ services:
       - DB_MIGRATIONS_DIR=./migrations
       - DB_SEEDS=./seeds/*.ts
       - DB_SEEDS_DIR=./seeds
+      - DB_SEEDERS=./seeders/*.seed.ts
       - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./bff:/home/node/app:cached
