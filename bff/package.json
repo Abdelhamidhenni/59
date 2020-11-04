@@ -1,7 +1,7 @@
 {
-  "name": "sgsatisfaction-bff",
+  "name": "59-bff",
   "version": "0.0.1",
-  "description": "SGSatisfaction BFF for PWA version",
+  "description": "59",
   "license": "MIT",
   "author": "Fast-IT",
   "scripts": {
@@ -14,7 +14,17 @@
     "test:coverage": "jest --coverage --passWithNoTests",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
-    "lint": "eslint --ext ts,js src test"
+    "lint": "eslint --ext ts,js src test",
+    "db-migrate:create": "typeorm migration:create -n",
+    "dev:db-migrate:up": "ts-node ./node_modules/.bin/typeorm migration:run",
+    "dev:db-migrate:down": "ts-node ./node_modules/.bin/typeorm migration:revert",
+    "dev:db-migrate:drop": "ts-node ./node_modules/.bin/typeorm schema:drop",
+    "dev:db-migrate:generate": "ts-node ./node_modules/.bin/typeorm migration:generate -n",
+    "docker:db-migrate:create": "docker-compose exec bff yarn db-migrate:create",
+    "docker:db-migrate:up": "docker-compose exec bff yarn dev:db-migrate:up",
+    "docker:db-migrate:down": "docker-compose exec bff yarn dev:db-migrate:down",
+    "docker:db-migrate:drop": "docker-compose exec bff yarn dev:db-migrate:drop",
+    "docker:db-migrate:generate": "docker-compose exec bff yarn dev:db-migrate:generate"
   },
   "jest": {
     "coverageDirectory": "../coverage",

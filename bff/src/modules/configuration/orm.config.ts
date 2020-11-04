@@ -13,5 +13,9 @@ export const ormconfig: TypeOrmModuleOptions = {
   entities: [process.env.DB_ENTITIES],
   synchronize: false,
   extra: { max: 10, min: 1, ssl: process.env.DB_SSL === 'true' || false },
+  migrations: [process.env.DB_MIGRATIONS],
+  cli: {
+    migrationsDir: process.env.DB_MIGRATIONS_DIR,
+  },
   namingStrategy: new SnakeNamingStrategy(),
 };
