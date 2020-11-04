@@ -20,11 +20,17 @@
     "dev:db-migrate:down": "ts-node ./node_modules/.bin/typeorm migration:revert",
     "dev:db-migrate:drop": "ts-node ./node_modules/.bin/typeorm schema:drop",
     "dev:db-migrate:generate": "ts-node ./node_modules/.bin/typeorm migration:generate -n",
+    "dev:seeds:create": "ts-node ./node_modules/.bin/typeorm migration:create -c seeds -n",
+    "dev:seeds:up": "ts-node ./node_modules/.bin/typeorm migration:run -c seeds",
+    "dev:seeds:down": "ts-node ./node_modules/.bin/typeorm migration:revert -c seeds",
     "docker:db-migrate:create": "docker-compose exec bff yarn db-migrate:create",
     "docker:db-migrate:up": "docker-compose exec bff yarn dev:db-migrate:up",
     "docker:db-migrate:down": "docker-compose exec bff yarn dev:db-migrate:down",
     "docker:db-migrate:drop": "docker-compose exec bff yarn dev:db-migrate:drop",
-    "docker:db-migrate:generate": "docker-compose exec bff yarn dev:db-migrate:generate"
+    "docker:db-migrate:generate": "docker-compose exec bff yarn dev:db-migrate:generate",
+    "docker:seeds:create": "docker-compose exec bff yarn dev:seeds:create",
+    "docker:seeds:up": "docker-compose exec bff yarn dev:seeds:up",
+    "docker:seeds:down": "docker-compose exec bff yarn dev:seeds:down"
   },
   "jest": {
     "coverageDirectory": "../coverage",
