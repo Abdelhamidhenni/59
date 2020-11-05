@@ -51,6 +51,22 @@ const formatComCommuneCouv = (element) => ({
   couv: element.couv / 100,
 });
 
+const formatComMenage = (element) => ({
+  menages: Math.round(element.C16_MEN),
+  alone: Math.round(element.C16_MENPSEUL),
+  mono: Math.round(element.C16_PMEN_MENFAMMONO),
+  departmentId: element.DEP,
+  regionId: element.REG,
+  zipCode: element.COM,
+});
+
+const formatRegMenage = (element) => ({
+  menages: Math.round(element.C16_MEN),
+  alone: Math.round(element.C16_MENPSEUL),
+  mono: Math.round(element.C16_PMEN_MENFAMMONO),
+  id: element.REG,
+});
+
 const couvCommuneParser = (couvCommuneData) => {
   const comCouvCommune = couvCommuneData.map((el) => formatComCommuneCouv(el));
 
@@ -77,6 +93,44 @@ const couvCommuneParser = (couvCommuneData) => {
   });
 
   return { comCouvCommune, regCouvCommune };
+};
+
+const menageParser = (menageData) => {
+  const comMenageFormatted = menageData.reduce((acc, datum) => {
+    const comMenage = formatComMenage(datum);
+    const index = acc.findIndex((el) => el.zipCode === comMenage.zipCode);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        menages: value.menages + comMenage.menages,
+        alone: value.alone + comMenage.alone,
+        mono: value.mono + comMenage.mono,
+      };
+    } else {
+      acc.push(comMenage);
+    }
+    return acc;
+  }, []);
+
+  const regMenageFormatted = menageData.reduce((acc, datum) => {
+    const regMenage = formatRegMenage(datum);
+    const index = acc.findIndex((el) => el.id === regMenage.id);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        menages: value.menages + regMenage.menages,
+        alone: value.alone + regMenage.alone,
+        mono: value.mono + regMenage.mono,
+      };
+    } else {
+      acc.push(regMenage);
+    }
+    return acc;
+  }, []);
+
+  return { comMenageFormatted, regMenageFormatted };
 };
 
 const evolStructPopParser = (evolStructPopData) => {
@@ -210,3 +264,4 @@ exports.diplomesFormationParser = diplomesFormationParser;
 exports.baseCcFilosofiParser = baseCcFilosofiParser;
 exports.metropoleSitesParser = metropoleSitesParser;
 exports.couvCommuneParser = couvCommuneParser;
+exports.menageParser = menageParser;

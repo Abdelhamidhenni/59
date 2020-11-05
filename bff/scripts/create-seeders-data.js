@@ -4,6 +4,7 @@ const {
   evolStructPopParser,
   diplomesFormationParser,
   baseCcFilosofiParser,
+  menageParser,
   metropoleSitesParser,
   couvCommuneParser,
 } = require('./parsers');
@@ -13,6 +14,7 @@ const {
   getBaseCcFilosofiData,
   getMetropoleSitesData,
   getCouvCommuneData,
+  getMenageData,
 } = require('./xlsx-readers');
 
 console.log('START READ EXCEL FILES');
@@ -22,6 +24,7 @@ const diplomesFormation = getDiplomesFormationData();
 const baseCcFilosofiData = getBaseCcFilosofiData();
 const metropoleSitesData = getMetropoleSitesData();
 const couvCommuneData = getCouvCommuneData();
+const menageData = getMenageData();
 
 console.log('READ EXCEL FILES DONE');
 console.log('START PARSING DATA');
@@ -31,8 +34,7 @@ const { comDiplomesFormationFormatted, regDiplomesFormationFormatted } = diplome
 const { comBaseCcFilosofi, depBaseCcFilosofi, regBaseCcFilosofi } = baseCcFilosofiParser(baseCcFilosofiData);
 const { comMetropoleSites, regMetropoleSites } = metropoleSitesParser(metropoleSitesData);
 const { comCouvCommune, regCouvCommune } = couvCommuneParser(couvCommuneData);
-// console.log('comBaseCcFilosofi', comBaseCcFilosofi);
-// console.log('regBaseCcFilosofi', regBaseCcFilosofi);
+const { comMenageFormatted, regMenageFormatted } = menageParser(menageData);
 
 console.log('PARSING DATA DONE');
 console.log('START FORMATTING DATA');
@@ -48,6 +50,8 @@ const municipalities = getMunicipalities(
   regMetropoleSites,
   comCouvCommune,
   regCouvCommune,
+  comMenageFormatted,
+  regMenageFormatted,
 );
 const regions = getRegions(regEvolStructPopFormatted, regDiplomesFormationFormatted, regBaseCcFilosofi);
 const departments = getDepartments();

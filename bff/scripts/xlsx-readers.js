@@ -45,8 +45,16 @@ const getCouvCommuneData = () => {
   return XLSX.utils.sheet_to_json(worksheet);
 };
 
+const getMenageData = () => {
+  const workbook = XLSX.readFile('./scripts/base-ic-couples-familles-menages-2016.xls');
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
+  return XLSX.utils.sheet_to_json(worksheet);
+};
+
 exports.getEvolStructPopData = getEvolStructPopData;
 exports.getDiplomesFormationData = getDiplomesFormationData;
 exports.getBaseCcFilosofiData = getBaseCcFilosofiData;
 exports.getMetropoleSitesData = getMetropoleSitesData;
 exports.getCouvCommuneData = getCouvCommuneData;
+exports.getMenageData = getMenageData;
