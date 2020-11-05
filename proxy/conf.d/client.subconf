@@ -2,6 +2,10 @@ location / {
   proxy_pass http://client:8080/;
 }
 
+location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+expires 365d;
+}
+
 # allowing websocket for webpack HMR
 location ~ ^/(sockjs-node|__webpack_dev_server__) {
     proxy_set_header X-Real-IP  $remote_addr;
