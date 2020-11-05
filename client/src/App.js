@@ -28,7 +28,16 @@ function App() {
     id: 1,
     name: "L'Abergement-Clémenciat",
     zipCode: "01001",
-    population: 767
+    population: 767,
+    department: {
+      id: "01",
+      name: "Ain",
+      regionId: "84",
+      region: {
+        id: "84",
+        name: "AUVERGNE-RHONE-ALPES"
+      }
+    }
   });
 
   const [municipalities, setMunicipalities] = React.useState([]);
