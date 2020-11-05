@@ -52,7 +52,7 @@ services:
   proxy:
     image: "nginx:latest"
     volumes:
-      - "./proxy/conf.d:/etc/nginx/conf.d:ro"
+      - "./proxy/conf.d:/etc/nginx/conf-prod.d:ro"
     ports:
       - "8000:8000"
     depends_on:

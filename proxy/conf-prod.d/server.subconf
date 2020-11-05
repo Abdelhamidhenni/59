@@ -1,0 +1,4 @@
+location /api {
+  rewrite /api/(.*)$ /api/$1 break;
+  proxy_pass http://bff:3000;
+}
