@@ -26,7 +26,7 @@ export class MunicipalitiesService {
     return await this.municipalityRepository.find({
       select: ['id', 'name', 'zipCode', 'population'],
       relations: ['department', 'department.region'],
-      take: 20,
+      take: 10,
       where: {
         name: Like(`%${name}%`),
       },

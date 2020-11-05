@@ -29,8 +29,8 @@ export class MunicipalitiesController {
 
   @Get('/search/:name')
   @ApiOperation({
-    operationId: 'GET /municipalities/name',
-    description: 'Get 20 municipalities according to name params',
+    operationId: 'GET /municipalities/search/:name',
+    description: 'Get 10 municipalities according to name params',
   })
   @ApiOkResponse({ description: 'Successful operation' })
   async findWithName(@Param('name') name: string): Promise<Municipality[]> {
