@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
-import { Municipality } from '../municipality/municipality.entity';
+import { Municipality } from '../../municipalities/municipality.entity';
 import { Region } from '../region/region.entity';
 
 @Entity()
