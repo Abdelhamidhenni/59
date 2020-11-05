@@ -1,7 +1,7 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
 
-import { Municipality } from '../src/municipalities/municipality.entity';
+import { Municipality } from '../src/modules/municipalities/municipality.entity';
 import * as municipalities from './datas/municipalities-7.json';
 
 export default class CreateMunicipality implements Seeder {

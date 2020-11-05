@@ -123,25 +123,74 @@ const departmentList = [
   { id: '976', name: 'Mayotte', regionId: '06' },
 ];
 
-const getMunicipalities = (evolStructPopFormatted, diplomesFormationFormatted, comBaseCcFilosofi) =>
-  evolStructPopFormatted.map((esp) => {
-    const df = diplomesFormationFormatted.find(({ zipCode }) => zipCode === esp.zipCode);
+const getScores = (esp, df, regEsp, regDf) => {
+  const thresholdUnemployed = regEsp.unemployed / regEsp.population;
+  const thresholdYoung = regEsp.young / regEsp.population;
+  const thresholdSenior = regEsp.senior / regEsp.population;
+  const thresholdNoDiploma = regDf.noDiploma / regEsp.population;
+
+  const partUnemployed = esp.unemployed / esp.population;
+  const partYoung = esp.young / esp.population;
+  const partSenion = esp.senior / esp.population;
+  const partNoDiploma = df.noDiploma / esp.population;
+
+  const administrativeCompetence = Math.round(
+    (((partUnemployed - thresholdUnemployed) / thresholdUnemployed + 1) * 100 +
+      ((partYoung - thresholdYoung) / thresholdYoung + 1) * 100) /
+      2,
+  );
+
+  const numericCompetence = Math.round(
+    (((partNoDiploma - thresholdNoDiploma) / thresholdNoDiploma + 1) * 100 +
+      ((partSenion - thresholdSenior) / thresholdSenior + 1) * 100) /
+      2,
+  );
+
+  return {
+    administrativeCompetence,
+    numericCompetence,
+    globalCompetence: Math.round((administrativeCompetence + numericCompetence) / 2),
+  };
+};
+
+const getMunicipalities = (
+  comEvolStructPopFormatted,
+  regEvolStructPopFormatted,
+  comDiplomesFormationFormatted,
+  regDiplomesFormationFormatted,
+  comBaseCcFilosofi,
+) =>
+  comEvolStructPopFormatted.map((esp) => {
+    const df = comDiplomesFormationFormatted.find(({ zipCode }) => zipCode === esp.zipCode);
     const cbcf = comBaseCcFilosofi.find(({ zipCode }) => zipCode === esp.zipCode);
+    const regEsp = regEvolStructPopFormatted.find(({ id }) => id === esp.regionId);
+    const regDf = regDiplomesFormationFormatted.find(({ id }) => id === esp.regionId);
+    const score = getScores(esp, df, regEsp, regDf);
     return {
-      ...esp,
-      ...df,
+      ...score,
       ...cbcf,
+      departmentId: esp.departmentId,
+      population: esp.population,
+      zipCode: esp.zipCode,
+      name: esp.name,
     };
   });
 
-const getRegions = (regBaseCcFilosofi) =>
+const getRegions = (regEvolStructPopFormatted, regDiplomesFormationFormatted, regBaseCcFilosofi) =>
   regionList.map((region) => {
+    const esp = regEvolStructPopFormatted.find(({ id }) => id === region.id);
+    const df = regDiplomesFormationFormatted.find(({ id }) => id === region.id);
     const rbcf = regBaseCcFilosofi.find(({ id }) => id === region.id);
     return {
       ...region,
+      ...df,
+      ...esp,
       ...rbcf,
     };
   });
 
+const getDepartments = () => departmentList;
+
 exports.getMunicipalities = getMunicipalities;
 exports.getRegions = getRegions;
+exports.getDepartments = getDepartments;

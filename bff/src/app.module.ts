@@ -7,7 +7,7 @@ import { ormconfig } from './modules/configuration/orm.config';
 import { TerminusOptionsService } from './modules/health-check/health-check.service';
 import { LoggerModule } from './modules/logger/logger.module';
 import { LogLevel } from './modules/logger/logger.types';
-import { MunicipalitiesModule } from './municipalities/municipalities.module';
+import { MunicipalitiesModule } from './modules/municipalities/municipalities.module';
 
 @Module({
   imports: [

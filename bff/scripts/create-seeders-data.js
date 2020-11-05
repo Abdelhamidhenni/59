@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { getMunicipalities, getRegions } = require('./formaters');
+const { getMunicipalities, getRegions, getDepartments } = require('./formaters');
 const { evolStructPopParser, diplomesFormationParser, baseCcFilosofiParser } = require('./parsers');
 const { getEvolStructPopData, getDiplomesFormationData, getBaseCcFilosofiData } = require('./xlsx-readers');
 
@@ -12,15 +12,24 @@ const baseCcFilosofiData = getBaseCcFilosofiData();
 console.log('READ EXCEL FILES DONE');
 console.log('START PARSING DATA');
 
-const evolStructPopFormatted = evolStructPopParser(evolStructPop);
-const diplomesFormationFormatted = diplomesFormationParser(diplomesFormation);
+const { comEvolStructPopFormatted, regEvolStructPopFormatted } = evolStructPopParser(evolStructPop);
+const { comDiplomesFormationFormatted, regDiplomesFormationFormatted } = diplomesFormationParser(diplomesFormation);
 const { comBaseCcFilosofi, depBaseCcFilosofi, regBaseCcFilosofi } = baseCcFilosofiParser(baseCcFilosofiData);
+
+console.log('regEvolStructPopFormatted', regEvolStructPopFormatted);
 
 console.log('PARSING DATA DONE');
 console.log('START FORMATTING DATA');
 
-const municipalities = getMunicipalities(evolStructPopFormatted, diplomesFormationFormatted, comBaseCcFilosofi);
-const regions = getRegions(regBaseCcFilosofi);
+const municipalities = getMunicipalities(
+  comEvolStructPopFormatted,
+  regEvolStructPopFormatted,
+  comDiplomesFormationFormatted,
+  regDiplomesFormationFormatted,
+  comBaseCcFilosofi,
+);
+const regions = getRegions(regEvolStructPopFormatted, regDiplomesFormationFormatted, regBaseCcFilosofi);
+const departments = getDepartments();
 
 console.log('FORMATTING DATA DONE');
 console.log('START WRITING JSON');
@@ -32,5 +41,8 @@ for (let i = 0; i < Math.ceil(municipalities.length / 5000); i++) {
 
 const regionData = JSON.stringify(regions);
 fs.writeFileSync(`./seeders/datas/regions.json`, regionData);
+
+const departmentData = JSON.stringify(departments);
+fs.writeFileSync(`./seeders/datas/departments.json`, departmentData);
 
 console.log('WRITING JSON DONE');
