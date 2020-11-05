@@ -14,7 +14,6 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start:prod": "yarn build && yarn start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
