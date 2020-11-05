@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React from "react";
 import Container from "@material-ui/core/Container";
 import AppHeader from "./components/AppHeader";
 import IndicatorsGlobal from "./components/IndicatorsGlobal";
@@ -7,16 +7,18 @@ import IndicatorsCard from "./components/IndicatorsCard";
 
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { fetchMunicipalities, fetchMunicipalityScore } from "./axios.service";
+import Downshift from "downshift";
+import {
+  fetchMunicipalitiesByName,
+  fetchMunicipalityScore
+} from "./axios.service";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 300
+    width: "100%",
+    margin: "auto"
   }
 }));
 function App() {
@@ -37,39 +39,86 @@ function App() {
       global: 72
     }
   });
-
-  const handleCityChange = async event => {
-    event.preventDefault();
-    setCity(event.target.value);
-    const municipalityScore = await fetchMunicipalityScore(
-      event.target.value.id
-    );
-    setMunicipalityScore(municipalityScore);
+  const searchMunicipalities = async event => {
+    if (!event.target.value || event.target.value.length < 3) {
+      return;
+    }
+    const municipalities = await fetchMunicipalitiesByName(event.target.value);
+    setMunicipalities(municipalities);
   };
 
-  useEffect(async () => {
-    const municipalities = await fetchMunicipalities();
-    setMunicipalities(municipalities);
-  }, []);
+  const handleCityChange = async value => {
+    setCity(value);
+    const municipalityScore = await fetchMunicipalityScore(value.id);
+    setMunicipalityScore(municipalityScore);
+  };
 
   return (
     <div className="App">
       <AppHeader />
       <Container maxWidth="md" component="main">
         <FormControl className={classes.formControl}>
-          <InputLabel id="city-label">City</InputLabel>
-          <Select
-            labelId="city-label"
-            id="city-label-select"
-            value={citySelected.name}
+          <Downshift
             onChange={handleCityChange}
+            itemToString={item => (item ? item.name : "")}
           >
-            {municipalities.map(city => (
-              <MenuItem key={city.name} value={city}>
-                {city.name}
-              </MenuItem>
-            ))}
-          </Select>
+            {({
+              selectedItem,
+              getInputProps,
+              getItemProps,
+              highlightedIndex,
+              isOpen,
+              inputValue,
+              getLabelProps
+            }) => (
+              <div>
+                <label style={{ display: "block" }} {...getLabelProps()}>
+                  Recherchez une ville
+                </label>{" "}
+                <br />
+                <input
+                  style={{ width: "50%", marginBottom: "1rem" }}
+                  {...getInputProps({
+                    placeholder: "Rechercher une ville",
+                    onChange: searchMunicipalities
+                  })}
+                />
+                {isOpen ? (
+                  <div
+                    style={{
+                      width: "50%",
+                      marginBottom: "1rem",
+                      margin: "auto"
+                    }}
+                  >
+                    {municipalities
+                      .filter(
+                        item =>
+                          !inputValue ||
+                          item.name
+                            .toLowerCase()
+                            .includes(inputValue.toLowerCase())
+                      )
+                      .map((item, index) => (
+                        <div
+                          {...getItemProps({ key: index, index, item })}
+                          style={{
+                            backgroundColor:
+                              highlightedIndex === index
+                                ? "lightgray"
+                                : "white",
+                            fontWeight:
+                              selectedItem === item ? "bold" : "normal"
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      ))}
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </Downshift>
         </FormControl>
         <IndicatorsGlobal
           city={citySelected}
