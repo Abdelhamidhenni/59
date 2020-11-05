@@ -1,8 +1,14 @@
 import axios from "axios";
+import wrapper from "axios-cache-plugin";
+
+let http = wrapper(axios, {
+  maxCacheSize: 15
+});
+http.__addFilter(/municipalities/);
 
 export const fetchMunicipalities = async () => {
   try {
-    const municipalities = await axios.get(`/api/municipalities`, {
+    const municipalities = await http.get(`/api/municipalities`, {
       baseURL: window.location.origin
     });
     return municipalities.data;
@@ -13,7 +19,7 @@ export const fetchMunicipalities = async () => {
 
 export const fetchMunicipalitiesByName = async name => {
   try {
-    const municipalities = await axios.get(
+    const municipalities = await http.get(
       `/api/municipalities/search/${name}`,
       {
         baseURL: window.location.origin
@@ -27,7 +33,7 @@ export const fetchMunicipalitiesByName = async name => {
 
 export const fetchMunicipalityScore = async id => {
   try {
-    const municipality = await axios.get(`/api/municipalities/${id}`, {
+    const municipality = await http.get(`/api/municipalities/${id}`, {
       baseURL: window.location.origin
     });
     return municipality.data;
