@@ -18,7 +18,7 @@ services:
   bff:
     image: node:12-alpine
     user: node
-    command: "yarn start"
+    command: "yarn start:dev"
     working_dir: /home/node/app
     ports:
       - 3000:3000
