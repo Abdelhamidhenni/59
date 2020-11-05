@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import AppHeader from "./components/AppHeader";
 import IndicatorsGlobal from "./components/IndicatorsGlobal";
@@ -10,6 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import axiosService, { fetchMunicipalities } from "./axios.service";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -20,18 +21,23 @@ const useStyles = makeStyles(theme => ({
 }));
 function App() {
   const classes = useStyles();
-  const municipalities = [
-    { id: 1, name: "Ville1", population: "20000" },
-    { id: 2, name: "Ville2", population: "50000" },
-    { id: 3, name: "Ville3", population: "10000" }
-  ];
 
-  const [citySelected, setCity] = React.useState(municipalities[0]);
+  const [citySelected, setCity] = React.useState({
+    id: 1,
+    name: "L'Abergement-Clémenciat"
+  });
+
+  const [municipalities, setMunicipalities] = React.useState([]);
 
   const handleCityChange = event => {
     event.preventDefault();
     setCity(event.target.value);
   };
+
+  useEffect(async () => {
+    const municipalities = await fetchMunicipalities();
+    setMunicipalities(municipalities);
+  }, []);
 
   return (
     <div className="App">
@@ -52,7 +58,11 @@ function App() {
             ))}
           </Select>
         </FormControl>
-        <IndicatorsGlobal city={citySelected} globalScore={80} />
+        <IndicatorsGlobal
+          city={citySelected}
+          population={20000}
+          globalScore={80}
+        />
         <IndicatorsCard />
       </Container>
     </div>
