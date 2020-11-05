@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Department } from 'src/modules/department/department.entity';
 import { Municipality } from 'src/municipalities/municipality.entity';
 import { Region } from 'src/modules/region/region.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 
 @Injectable()
 export class MunicipalitiesService {
@@ -12,8 +12,6 @@ export class MunicipalitiesService {
     private readonly municipalityRepository: Repository<Municipality>,
     @InjectRepository(Department)
     private readonly departmentRepository: Repository<Department>,
-    @InjectRepository(Region)
-    private readonly regionRepository: Repository<Region>,
   ) {}
 
   async findFirstHundred(): Promise<Municipality[]> {
@@ -21,6 +19,17 @@ export class MunicipalitiesService {
       select: ['id', 'name', 'zipCode', 'population'],
       relations: ['department', 'department.region'],
       take: 10,
+    });
+  }
+
+  async findWithName(name: string): Promise<Municipality[]> {
+    return await this.municipalityRepository.find({
+      select: ['id', 'name', 'zipCode', 'population'],
+      relations: ['department', 'department.region'],
+      take: 20,
+      where: {
+        name: Like(`%${name}%`),
+      },
     });
   }
 

@@ -20,10 +20,20 @@ export class MunicipalitiesController {
   @Get()
   @ApiOperation({
     operationId: 'GET /municipalities',
-    description: 'Get 100 municipalities',
+    description: 'Get 10 municipalities',
   })
   @ApiOkResponse({ description: 'Successful operation' })
   async findFirstHundred(): Promise<Municipality[]> {
     return this.service.findFirstHundred();
+  }
+
+  @Get('/search/:name')
+  @ApiOperation({
+    operationId: 'GET /municipalities/name',
+    description: 'Get 20 municipalities according to name params',
+  })
+  @ApiOkResponse({ description: 'Successful operation' })
+  async findWithName(@Param('name') name: string): Promise<Municipality[]> {
+    return this.service.findWithName(name);
   }
 }
