@@ -10,11 +10,11 @@ export class MunicipalitiesController {
   @Get(':id')
   @ApiOperation({
     operationId: 'GET /municipalities/id',
-    description: 'Get one municipality',
+    description: 'Get one municipality result',
   })
   @ApiOkResponse({ description: 'Successful operation' })
   async getMunicipalityResult(@Param('id') id: number): Promise<any> {
-    return this.service.findOne(id);
+    return this.service.getMunicipalityResults(id);
   }
 
   @Get()

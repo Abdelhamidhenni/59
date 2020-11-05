@@ -19,13 +19,11 @@ const formatFormation = (iri) => ({
 console.log('START PARSING');
 
 const workbook = XLSX.readFile('./scripts/base-ic-evol-struct-pop-2016.xls');
-// const workbook = XLSX.readFile('./scripts/nit.xls');
 const firstSheetName = workbook.SheetNames[0];
 const worksheet = workbook.Sheets[firstSheetName];
 const iris = XLSX.utils.sheet_to_json(worksheet);
 
 const workbookFormation = XLSX.readFile('./scripts/base-ic-diplomes-formation-2016.xls');
-// const workbook = XLSX.readFile('./scripts/nit.xls');
 const firstSheetNameFormation = workbookFormation.SheetNames[0];
 const worksheetFormation = workbookFormation.Sheets[firstSheetNameFormation];
 const irisFormation = XLSX.utils.sheet_to_json(worksheetFormation);
