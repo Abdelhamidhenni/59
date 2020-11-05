@@ -24,9 +24,6 @@ export default function Score({ type, municipalityScore }) {
       <Typography component="h2" variant="h3" color="textPrimary">
         {score}
       </Typography>
-      <Typography variant="h6" color="textSecondary">
-        %
-      </Typography>
     </div>
   );
 }

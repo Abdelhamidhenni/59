@@ -25,7 +25,8 @@ function App() {
   const [citySelected, setCity] = React.useState({
     id: 1,
     name: "L'Abergement-Clémenciat",
-    zipCode: "01001"
+    zipCode: "01001",
+    population: 767
   });
 
   const [municipalities, setMunicipalities] = React.useState([]);
@@ -72,7 +73,7 @@ function App() {
         </FormControl>
         <IndicatorsGlobal
           city={citySelected}
-          population={20000}
+          population={citySelected.population}
           globalScore={80}
         />
         <IndicatorsCard municipalityScore={municipalityScore} />

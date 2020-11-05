@@ -18,7 +18,7 @@ export class MunicipalitiesService {
 
   async findFirstHundred(): Promise<Municipality[]> {
     return await this.municipalityRepository.find({
-      select: ['id', 'name', 'zipCode'],
+      select: ['id', 'name', 'zipCode', 'population'],
       relations: ['department', 'department.region'],
       take: 10,
     });
