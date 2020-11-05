@@ -13,6 +13,14 @@ export class Department {
   @Column()
   name: string;
 
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  poverty: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  livingStandard: number;
+
   @ApiProperty()
   @Column()
   regionId: number;

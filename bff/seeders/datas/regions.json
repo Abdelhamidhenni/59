@@ -1,0 +1,20 @@
+[
+  { "id": "01", "name": "GUADELOUPE" },
+  { "id": "02", "name": "MARTINIQUE", "poverty": 29.8, "livingStandard": 17057.41935483871 },
+  { "id": "03", "name": "GUYANE" },
+  { "id": "04", "name": "LA REUNION", "poverty": 39, "livingStandard": 14733.448275862069 },
+  { "id": "06", "name": "MAYOTTE" },
+  { "id": "11", "name": "ILE-DE-FRANCE", "poverty": 15.7, "livingStandard": 22906 },
+  { "id": "24", "name": "CENTRE-VAL DE LOIRE", "poverty": 13.2, "livingStandard": 20658 },
+  { "id": "27", "name": "BOURGOGNE-FRANCHE-COMTE", "poverty": 13.1, "livingStandard": 20579 },
+  { "id": "28", "name": "NORMANDIE", "poverty": 13.7, "livingStandard": 20301.25 },
+  { "id": "32", "name": "HAUTS DE FRANCE", "poverty": 18.3, "livingStandard": 19249.33333333333 },
+  { "id": "44", "name": "GRAND EST", "poverty": 14.5, "livingStandard": 20751.11111111111 },
+  { "id": "52", "name": "PAYS DE LA LOIRE", "poverty": 11, "livingStandard": 20642 },
+  { "id": "53", "name": "BRETAGNE", "poverty": 11.1, "livingStandard": 20742.38095238095 },
+  { "id": "75", "name": "NOUVELLE AQUITAINE", "poverty": 13.7, "livingStandard": 20370.357142857145 },
+  { "id": "76", "name": "OCCITANIE", "poverty": 16.9, "livingStandard": 19905 },
+  { "id": "84", "name": "AUVERGNE-RHONE-ALPES", "poverty": 12.7, "livingStandard": 21478 },
+  { "id": "93", "name": "PROVENCE-ALPES-COTE D'AZUR", "poverty": 17.2, "livingStandard": 20524.5 },
+  { "id": "94", "name": "CORSE", "poverty": 19.6, "livingStandard": 19519 }
+]

@@ -12,6 +12,14 @@ export class Region {
   @Column()
   name: string;
 
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  poverty: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  livingStandard: number;
+
   @OneToMany(() => Department, (department) => department.region)
   departments: Department[];
 }
