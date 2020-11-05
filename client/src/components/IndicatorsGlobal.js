@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default function IndicatorsGlobal({ city, population, globalScore }) {
   const {
@@ -14,16 +14,14 @@ export default function IndicatorsGlobal({ city, population, globalScore }) {
   return (
     <Grid container spacing={10} alignItems="center">
       <Grid item xs={12} sm={12} md={12}>
-        <Typography component="h5" variant="h5" color="textPrimary">
-          L' indice de fragilité est {globalScore}
-        </Typography>
-        <Typography component="p" variant="p" color="textPrimary">
+        <h2>L' indice de fragilité est {globalScore}</h2>
+        <p>
           La ville {name} - {zipCode} à une population de {population}{" "}
           habitants.
-        </Typography>
-        <Typography component="p" variant="p" color="textPrimary">
+        </p>
+        <p>
           Son département est {departmentName} et sa region est {regionName}.
-        </Typography>
+        </p>
       </Grid>
     </Grid>
   );

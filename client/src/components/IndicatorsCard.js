@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import EcoOutlinedIcon from "@material-ui/icons/EcoOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "baseline",
     marginBottom: theme.spacing(2)
+  },
+  li: {
+    textAlign: "center"
   }
 }));
 
@@ -46,7 +48,8 @@ const indicatorsDetails = [
     type: "administrativeCompetence", // à changer
 
     description: [
-      "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
+      "Identifier des territoires mal couverts",
+      "par une offre de service d'information ou par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
@@ -60,7 +63,7 @@ const indicatorsDetails = [
     title: "Capacité d'usage des interfaces numériques",
     type: "numericCompetence",
     description: [
-      "Identifier des populations parmi lesquelles s'observe une fréquence d'illectronisme ou difficulté à utiliser internet."
+      "Identifier des populations parmi lesquelles s'observent une fréquence d'illectronisme ou difficulté à utiliser internet."
     ]
   },
   {
@@ -68,7 +71,8 @@ const indicatorsDetails = [
     subheader: "Compétences / Capacité",
     type: "globalCompetence",
     description: [
-      "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
+      "Identifier des populations parmi lesquelles s'observent",
+      "une fréquence d'illectronisme ou difficulté à utiliser internet ou des difficultés à accomplir des procédures administratives."
     ]
   },
   {
@@ -108,14 +112,9 @@ export default function IndicatorsCard({ municipalityScore }) {
                 />
                 <ul>
                   {indicator.description.map(line => (
-                    <Typography
-                      component="li"
-                      variant="subtitle1"
-                      align="center"
-                      key={line}
-                    >
+                    <li className={classes.li} key={line}>
                       {line}
-                    </Typography>
+                    </li>
                   ))}
                 </ul>
               </CardContent>
