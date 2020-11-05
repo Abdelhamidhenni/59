@@ -54,7 +54,7 @@ const indicatorsDetails = [
   },
   {
     title: "Accès aux interfaces",
-    type: "administrativeCompetence", // à changer
+    type: "interfaceAccess",
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]

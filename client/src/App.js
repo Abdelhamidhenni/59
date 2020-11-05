@@ -42,7 +42,8 @@ function App() {
   const [municipalityScore, setMunicipalityScore] = React.useState({
     administrativeCompetence: 53,
     numericCompetence: 91,
-    globalCompetence: 72
+    globalCompetence: 72,
+    interfaceAccess: 26
   });
   const searchMunicipalities = async event => {
     if (!event.target.value || event.target.value.length < 3) {
