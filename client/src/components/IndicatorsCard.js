@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
 const indicatorsDetails = [
   {
     title: "Accès à l'information",
-    type: "administrative", // à changer
+    type: "administrativeCompetence", // à changer
+
     description: [
       "Identifier des territoires mal couverts par une offre de service d'information ou des populations qui auront des difficultés à comprendre l'information."
     ]
@@ -42,21 +43,22 @@ const indicatorsDetails = [
   {
     title: "Score global Accès",
     subheader: "Accès",
-    type: "administrative", // à changer
+    type: "administrativeCompetence", // à changer
+
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Accès aux interfaces",
-    type: "administrative", // à changer
+    type: "administrativeCompetence", // à changer
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Capacité d'usage des interfaces numériques",
-    type: "numerique",
+    type: "numericCompetence",
     description: [
       "Identifier des populations parmi lesquelles s'observe une fréquence d'illectronisme ou difficulté à utiliser internet."
     ]
@@ -64,14 +66,14 @@ const indicatorsDetails = [
   {
     title: "Score global Compétences",
     subheader: "Compétences / Capacité",
-    type: "global",
+    type: "globalCompetence",
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Compétences administratives",
-    type: "administrative",
+    type: "administrativeCompetence",
     description: [
       "Identifier des populations parmi lesquelles s'observent des difficultés à accomplir des procédures administratives."
     ]
