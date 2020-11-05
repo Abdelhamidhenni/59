@@ -30,8 +30,3 @@ export const fetchMunicipalityScore = async id => {
     throw Error("Error during getting municipality score");
   }
 };
-
-export default {
-  fetchMunicipalitiesByName,
-  fetchMunicipalityScore
-};

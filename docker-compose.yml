@@ -24,7 +24,7 @@ services:
       - PORT=8080
       - BROWSER=none
       - CHOKIDAR_USEPOLLING=true
-    command: yarn start
+    command: yarn start:prod
     volumes:
       - "./client:/home/node/app:cached"
     working_dir: /home/node/app
@@ -71,7 +71,7 @@ services:
     volumes:
       - "./proxy/conf.d:/etc/nginx/conf.d:ro"
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - client
       - bff

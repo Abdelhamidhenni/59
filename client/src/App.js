@@ -6,7 +6,6 @@ import IndicatorsGlobal from "./components/IndicatorsGlobal";
 import IndicatorsCard from "./components/IndicatorsCard";
 
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Downshift from "downshift";
 import {
@@ -16,7 +15,6 @@ import {
 
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: theme.spacing(1),
     width: "100%",
     margin: "auto"
   }
