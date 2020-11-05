@@ -20,18 +20,16 @@ const useStyles = makeStyles(theme => ({
 }));
 function App() {
   const classes = useStyles();
-  const cities = [
-    { name: "94350", population: "20000" },
-    { name: "94250", population: "50000" },
-    { name: "94150", population: "10000" }
+  const municipalities = [
+    { id: 1, name: "Ville1", population: "20000" },
+    { id: 2, name: "Ville2", population: "50000" },
+    { id: 3, name: "Ville3", population: "10000" }
   ];
 
-  const [citySelected, setCity] = React.useState({
-    name: "94350",
-    population: "20000"
-  });
+  const [citySelected, setCity] = React.useState(municipalities[0]);
 
   const handleCityChange = event => {
+    event.preventDefault();
     setCity(event.target.value);
   };
 
@@ -47,7 +45,7 @@ function App() {
             value={citySelected.name}
             onChange={handleCityChange}
           >
-            {cities.map(city => (
+            {municipalities.map(city => (
               <MenuItem key={city.name} value={city}>
                 {city.name}
               </MenuItem>

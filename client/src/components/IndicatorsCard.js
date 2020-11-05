@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import EcoOutlinedIcon from "@material-ui/icons/EcoOutlined";
 import { makeStyles } from "@material-ui/core/styles";
+import Score from "./Score";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -33,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 const indicatorsDetails = [
   {
     title: "Accès à l'information",
-    score: "0",
+    type: "administrative", // à changer
     description: [
       "Identifier des territoires mal couverts par une offre de service d'information ou des populations qui auront des difficultés à comprendre l'information."
     ]
@@ -41,21 +42,21 @@ const indicatorsDetails = [
   {
     title: "Score global Accès",
     subheader: "Accès",
-    score: "15",
+    type: "administrative", // à changer
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Accès aux interfaces",
-    score: "0",
+    type: "administrative", // à changer
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Capacité d'usage des interfaces numériques",
-    score: "30",
+    type: "numerique",
     description: [
       "Identifier des populations parmi lesquelles s'observe une fréquence d'illectronisme ou difficulté à utiliser internet."
     ]
@@ -63,14 +64,14 @@ const indicatorsDetails = [
   {
     title: "Score global Compétences",
     subheader: "Compétences / Capacité",
-    score: "15",
+    type: "administrative", // à changer
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
   },
   {
     title: "Compétences administratives",
-    score: "30",
+    type: "administrative",
     description: [
       "Identifier des populations parmi lesquelles s'observent des difficultés à accomplir des procédures administratives."
     ]
@@ -100,14 +101,7 @@ export default function IndicatorsCard() {
                 className={classes.cardHeader}
               />
               <CardContent>
-                <div className={classes.cardScore}>
-                  <Typography component="h2" variant="h3" color="textPrimary">
-                    {indicator.score}
-                  </Typography>
-                  <Typography variant="h6" color="textSecondary">
-                    %
-                  </Typography>
-                </div>
+                <Score type={indicator.type} />
                 <ul>
                   {indicator.description.map(line => (
                     <Typography
