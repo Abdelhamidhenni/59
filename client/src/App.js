@@ -43,7 +43,10 @@ function App() {
     administrativeCompetence: 53,
     numericCompetence: 91,
     globalCompetence: 72,
-    interfaceAccess: 26
+    interfaceAccess: 26,
+    informationAccess: 40,
+    globalAccess: 69,
+    globalScore: 70
   });
   const searchMunicipalities = async event => {
     if (!event.target.value || event.target.value.length < 3) {
@@ -129,7 +132,7 @@ function App() {
         <IndicatorsGlobal
           city={citySelected}
           population={citySelected.population}
-          globalScore={80}
+          globalScore={municipalityScore.globalScore}
         />
         <IndicatorsCard municipalityScore={municipalityScore} />
       </Container>

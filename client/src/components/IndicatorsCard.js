@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 const indicatorsDetails = [
   {
     title: "Accès à l'information",
-    type: "administrativeCompetence", // à changer
+    type: "informationAccess",
 
     description: [
       "Identifier des territoires mal couverts par une offre de service d'information ou des populations qui auront des difficultés à comprendre l'information."
@@ -45,7 +45,7 @@ const indicatorsDetails = [
   {
     title: "Score global Accès",
     subheader: "Accès",
-    type: "administrativeCompetence", // à changer
+    type: "globalAccess",
 
     description: [
       "Identifier des territoires mal couverts",
