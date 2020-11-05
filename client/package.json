@@ -7,6 +7,7 @@
     "@material-ui/icons": "4.9.1",
     "axios": "0.21.0",
     "axios-cache-plugin": "0.1.0",
+    "downshift": "^6.0.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-scripts": "4.0.0",

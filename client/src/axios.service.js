@@ -6,17 +6,6 @@ let http = wrapper(axios, {
 });
 http.__addFilter(/municipalities/);
 
-export const fetchMunicipalities = async () => {
-  try {
-    const municipalities = await http.get(`/api/municipalities`, {
-      baseURL: window.location.origin
-    });
-    return municipalities.data;
-  } catch (error) {
-    throw Error("Error during getting municipalities");
-  }
-};
-
 export const fetchMunicipalitiesByName = async name => {
   try {
     const municipalities = await http.get(
@@ -43,6 +32,6 @@ export const fetchMunicipalityScore = async id => {
 };
 
 export default {
-  fetchMunicipalities,
+  fetchMunicipalitiesByName,
   fetchMunicipalityScore
 };
