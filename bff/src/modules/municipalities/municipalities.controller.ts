@@ -17,16 +17,6 @@ export class MunicipalitiesController {
     return this.service.findOne(id);
   }
 
-  @Get()
-  @ApiOperation({
-    operationId: 'GET /municipalities',
-    description: 'Get 10 municipalities',
-  })
-  @ApiOkResponse({ description: 'Successful operation' })
-  async findFirstHundred(): Promise<Municipality[]> {
-    return this.service.findFirstHundred();
-  }
-
   @Get('/search/:name')
   @ApiOperation({
     operationId: 'GET /municipalities/search/:name',
