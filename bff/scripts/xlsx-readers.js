@@ -31,6 +31,22 @@ const getBaseCcFilosofiData = () => {
   };
 };
 
+const getMetropoleSitesData = () => {
+  const workbook = XLSX.readFile('./scripts/2020-t2-metropole-sites.xls');
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
+  return XLSX.utils.sheet_to_json(worksheet);
+};
+
+const getCouvCommuneData = () => {
+  const workbook = XLSX.readFile('./scripts/2020T2_communes.xlsx');
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
+  return XLSX.utils.sheet_to_json(worksheet);
+};
+
 exports.getEvolStructPopData = getEvolStructPopData;
 exports.getDiplomesFormationData = getDiplomesFormationData;
 exports.getBaseCcFilosofiData = getBaseCcFilosofiData;
+exports.getMetropoleSitesData = getMetropoleSitesData;
+exports.getCouvCommuneData = getCouvCommuneData;

@@ -22,6 +22,18 @@ export class Municipality {
 
   @ApiProperty({ required: false })
   @Column({ nullable: true })
+  interfaceAccess: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  informationAccess: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  globalAccess: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
   administrativeCompetence: number;
 
   @ApiProperty({ required: false })
@@ -31,6 +43,10 @@ export class Municipality {
   @ApiProperty({ required: false })
   @Column({ nullable: true })
   globalCompetence: number;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  globalScore: number;
 
   // @ApiProperty({ required: false })
   // @Column({ nullable: true })

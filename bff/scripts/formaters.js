@@ -4,9 +4,9 @@ const regionList = [
   { id: '03', name: 'GUYANE' },
   { id: '04', name: 'LA REUNION' },
   { id: '06', name: 'MAYOTTE' },
-  { id: '11', name: 'ILE-DE-FRANCE' },
-  { id: '24', name: 'CENTRE-VAL DE LOIRE' },
-  { id: '27', name: 'BOURGOGNE-FRANCHE-COMTE' },
+  { id: '11', name: 'ILE DE FRANCE' },
+  { id: '24', name: 'CENTRE VAL DE LOIRE' },
+  { id: '27', name: 'BOURGOGNE FRANCHE COMTE' },
   { id: '28', name: 'NORMANDIE' },
   { id: '32', name: 'HAUTS DE FRANCE' },
   { id: '44', name: 'GRAND EST' },
@@ -14,8 +14,8 @@ const regionList = [
   { id: '53', name: 'BRETAGNE' },
   { id: '75', name: 'NOUVELLE AQUITAINE' },
   { id: '76', name: 'OCCITANIE' },
-  { id: '84', name: 'AUVERGNE-RHONE-ALPES' },
-  { id: '93', name: "PROVENCE-ALPES-COTE D'AZUR" },
+  { id: '84', name: 'AUVERGNE RHONE ALPES' },
+  { id: '93', name: 'PROVENCE ALPES COTE D AZUR' },
   { id: '94', name: 'CORSE' },
 ];
 
@@ -123,7 +123,7 @@ const departmentList = [
   { id: '976', name: 'Mayotte', regionId: '06' },
 ];
 
-const getScores = (esp, df, regEsp, regDf) => {
+const getScores = (esp, df, cbcf, ms, cc, regEsp, regDf, regBcf, regMs, regCc) => {
   const thresholdUnemployed = regEsp.unemployed / regEsp.population;
   const thresholdYoung = regEsp.young / regEsp.population;
   const thresholdSenior = regEsp.senior / regEsp.population;
@@ -133,6 +133,14 @@ const getScores = (esp, df, regEsp, regDf) => {
   const partYoung = esp.young / esp.population;
   const partSenion = esp.senior / esp.population;
   const partNoDiploma = df.noDiploma / esp.population;
+
+  const poverty = cbcf && regBcf ? ((cbcf.poverty - regBcf.poverty) / regBcf.poverty + 1) * 100 : 0;
+  const livingStandard =
+    cbcf && regBcf ? ((cbcf.livingStandard - regBcf.livingStandard) / regBcf.livingStandard + 1) * 100 : 0;
+  const twogCover = ms && regMs ? ((1 - ms.twogCover) / regMs.twogCover) * 100 : 0;
+  const hdCover = cc && regCc ? ((1 - cc.couv) / regMs.couv) * 100 : 0;
+
+  const interfaceAccess = Math.round((poverty + livingStandard + twogCover + hdCover) / 4);
 
   const administrativeCompetence = Math.round(
     (((partUnemployed - thresholdUnemployed) / thresholdUnemployed + 1) * 100 +
@@ -147,6 +155,7 @@ const getScores = (esp, df, regEsp, regDf) => {
   );
 
   return {
+    interfaceAccess,
     administrativeCompetence,
     numericCompetence,
     globalCompetence: Math.round((administrativeCompetence + numericCompetence) / 2),
@@ -159,16 +168,26 @@ const getMunicipalities = (
   comDiplomesFormationFormatted,
   regDiplomesFormationFormatted,
   comBaseCcFilosofi,
+  regBaseCcFilosofi,
+  comMetropoleSites,
+  regMetropoleSites,
+  comCouvCommune,
+  regCouvCommune,
 ) =>
   comEvolStructPopFormatted.map((esp) => {
+    const region = regionList.find(({ id }) => id === esp.regionId);
     const df = comDiplomesFormationFormatted.find(({ zipCode }) => zipCode === esp.zipCode);
     const cbcf = comBaseCcFilosofi.find(({ zipCode }) => zipCode === esp.zipCode);
+    const ms = comMetropoleSites.find(({ zipCode }) => zipCode === esp.zipCode);
+    const cc = comCouvCommune.find(({ zipCode }) => zipCode === esp.zipCode);
     const regEsp = regEvolStructPopFormatted.find(({ id }) => id === esp.regionId);
     const regDf = regDiplomesFormationFormatted.find(({ id }) => id === esp.regionId);
-    const score = getScores(esp, df, regEsp, regDf);
+    const regBcf = regBaseCcFilosofi.find(({ id }) => id === esp.regionId);
+    const regMs = regMetropoleSites.find(({ regionName }) => regionName === region.name);
+    const regCc = regCouvCommune.find(({ id }) => id === esp.regionId);
+    const score = getScores(esp, df, cbcf, ms, cc, regEsp, regDf, regBcf, regMs, regCc);
     return {
       ...score,
-      ...cbcf,
       departmentId: esp.departmentId,
       population: esp.population,
       zipCode: esp.zipCode,

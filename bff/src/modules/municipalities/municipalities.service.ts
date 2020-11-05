@@ -23,7 +23,7 @@ export class MunicipalitiesService {
 
   async findOne(id: number): Promise<Municipality> {
     return await this.municipalityRepository.findOne(id, {
-      select: ['id', 'administrativeCompetence', 'numericCompetence', 'globalCompetence'],
+      select: ['id', 'interfaceAccess', 'administrativeCompetence', 'numericCompetence', 'globalCompetence'],
     });
   }
 }

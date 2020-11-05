@@ -1,13 +1,27 @@
 const fs = require('fs');
 const { getMunicipalities, getRegions, getDepartments } = require('./formaters');
-const { evolStructPopParser, diplomesFormationParser, baseCcFilosofiParser } = require('./parsers');
-const { getEvolStructPopData, getDiplomesFormationData, getBaseCcFilosofiData } = require('./xlsx-readers');
+const {
+  evolStructPopParser,
+  diplomesFormationParser,
+  baseCcFilosofiParser,
+  metropoleSitesParser,
+  couvCommuneParser,
+} = require('./parsers');
+const {
+  getEvolStructPopData,
+  getDiplomesFormationData,
+  getBaseCcFilosofiData,
+  getMetropoleSitesData,
+  getCouvCommuneData,
+} = require('./xlsx-readers');
 
 console.log('START READ EXCEL FILES');
 
 const evolStructPop = getEvolStructPopData();
 const diplomesFormation = getDiplomesFormationData();
 const baseCcFilosofiData = getBaseCcFilosofiData();
+const metropoleSitesData = getMetropoleSitesData();
+const couvCommuneData = getCouvCommuneData();
 
 console.log('READ EXCEL FILES DONE');
 console.log('START PARSING DATA');
@@ -15,8 +29,10 @@ console.log('START PARSING DATA');
 const { comEvolStructPopFormatted, regEvolStructPopFormatted } = evolStructPopParser(evolStructPop);
 const { comDiplomesFormationFormatted, regDiplomesFormationFormatted } = diplomesFormationParser(diplomesFormation);
 const { comBaseCcFilosofi, depBaseCcFilosofi, regBaseCcFilosofi } = baseCcFilosofiParser(baseCcFilosofiData);
-
-console.log('regEvolStructPopFormatted', regEvolStructPopFormatted);
+const { comMetropoleSites, regMetropoleSites } = metropoleSitesParser(metropoleSitesData);
+const { comCouvCommune, regCouvCommune } = couvCommuneParser(couvCommuneData);
+// console.log('comBaseCcFilosofi', comBaseCcFilosofi);
+// console.log('regBaseCcFilosofi', regBaseCcFilosofi);
 
 console.log('PARSING DATA DONE');
 console.log('START FORMATTING DATA');
@@ -27,6 +43,11 @@ const municipalities = getMunicipalities(
   comDiplomesFormationFormatted,
   regDiplomesFormationFormatted,
   comBaseCcFilosofi,
+  regBaseCcFilosofi,
+  comMetropoleSites,
+  regMetropoleSites,
+  comCouvCommune,
+  regCouvCommune,
 );
 const regions = getRegions(regEvolStructPopFormatted, regDiplomesFormationFormatted, regBaseCcFilosofi);
 const departments = getDepartments();

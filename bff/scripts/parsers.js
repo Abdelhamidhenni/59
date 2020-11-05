@@ -27,17 +27,57 @@ const formatRegDiplomesFormation = (element) => ({
   id: element.REG,
 });
 
-const formatComBaseCcFilosofi = (iri) => ({
-  poverty: iri.TP6016 || 0,
-  livingStandard: iri.MED16 || 0,
-  zipCode: iri.CODGEO,
+const formatComBaseCcFilosofi = (element) => ({
+  poverty: element.TP6016 / 100 || 0,
+  livingStandard: element.MED16 || 0,
+  zipCode: element.CODGEO,
 });
 
-const formatRegBaseCcFilosofi = (iri) => ({
-  poverty: iri.TP6016 || 0,
-  livingStandard: iri.MED16 || 0,
-  id: iri.CODGEO,
+const formatRegBaseCcFilosofi = (element) => ({
+  poverty: element.TP6016 / 100 || 0,
+  livingStandard: element.MED16 || 0,
+  id: element.CODGEO,
 });
+
+const formatComMetropoleSites = (element) => ({
+  twogCover: element.site_2g,
+  zipCode: element.insee_com.length === 5 ? element.insee_com : `0${element.insee_com}`,
+  regionName: element.nom_reg,
+});
+
+const formatComCommuneCouv = (element) => ({
+  zipCode: element.COM,
+  regionId: element.REG,
+  couv: element.couv / 100,
+});
+
+const couvCommuneParser = (couvCommuneData) => {
+  const comCouvCommune = couvCommuneData.map((el) => formatComCommuneCouv(el));
+
+  const regCouvCommuneTotal = comCouvCommune.reduce((acc, datum) => {
+    const index = acc.findIndex((el) => el.regionId === datum.regionId);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        couv: value.couv + datum.couv,
+      };
+    } else {
+      acc.push({ regionId: datum.regionId, couv: datum.couv });
+    }
+    return acc;
+  }, []);
+
+  const regCouvCommune = regCouvCommuneTotal.map(({ regionId, couv }) => {
+    const citiesCount = comCouvCommune.filter(({ regionId: id }) => id === regionId).length;
+    return {
+      regionId,
+      couv: couv / citiesCount,
+    };
+  });
+
+  return { comCouvCommune, regCouvCommune };
+};
 
 const evolStructPopParser = (evolStructPopData) => {
   const comEvolStructPopFormatted = evolStructPopData.reduce((acc, datum) => {
@@ -121,6 +161,52 @@ const baseCcFilosofiParser = ({ com, dep, reg }) => {
   };
 };
 
+const metropoleSitesParser = (metropoleSitesData) => {
+  const comMetropoleSites = metropoleSitesData.reduce((acc, datum) => {
+    const metropoleSite = formatComMetropoleSites(datum);
+    const index = acc.findIndex((el) => el.zipCode === metropoleSite.zipCode);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        twogCover: Math.max(value.twogCover, metropoleSite.twogCover),
+      };
+    } else {
+      acc.push(metropoleSite);
+    }
+    return acc;
+  }, []);
+
+  const regMetropoleSiteNumbers = comMetropoleSites.reduce((acc, datum) => {
+    const index = acc.findIndex((el) => el.regionName === datum.regionName);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        sitesWith2g: value.sitesWith2g + datum.twogCover,
+      };
+    } else {
+      acc.push({ regionName: datum.regionName, sitesWith2g: 1 });
+    }
+    return acc;
+  }, []);
+
+  const regMetropoleSites = regMetropoleSiteNumbers.map(({ regionName, sitesWith2g }) => {
+    const citiesCount = comMetropoleSites.filter(({ regionName: rn }) => rn === regionName).length;
+    return {
+      regionName,
+      twogCover: sitesWith2g / citiesCount,
+    };
+  });
+
+  return {
+    comMetropoleSites,
+    regMetropoleSites,
+  };
+};
+
 exports.evolStructPopParser = evolStructPopParser;
 exports.diplomesFormationParser = diplomesFormationParser;
 exports.baseCcFilosofiParser = baseCcFilosofiParser;
+exports.metropoleSitesParser = metropoleSitesParser;
+exports.couvCommuneParser = couvCommuneParser;
