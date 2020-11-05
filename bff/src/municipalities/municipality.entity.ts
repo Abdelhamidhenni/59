@@ -36,13 +36,13 @@ export class Municipality {
   @Column({ nullable: true })
   noDiploma: number;
 
-  @ApiProperty({ required: false })
-  @Column({ nullable: true })
-  poverty: number;
+  // @ApiProperty({ required: false })
+  // @Column({ nullable: true })
+  // poverty: number;
 
-  @ApiProperty({ required: false })
-  @Column({ nullable: true })
-  livingStandard: number;
+  // @ApiProperty({ required: false })
+  // @Column({ nullable: true })
+  // livingStandard: number;
 
   @ApiProperty()
   @Column()
