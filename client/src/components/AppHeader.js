@@ -50,7 +50,7 @@ export default function AppHeader() {
               href="/files/report-team-59.pdf"
               target="_blank"
             >
-              Download a presentation of the final result
+              Télécharger la présentation du résultat
             </Link>
           </nav>
         </Toolbar>
