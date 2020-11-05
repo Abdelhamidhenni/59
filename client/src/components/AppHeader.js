@@ -4,6 +4,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +43,16 @@ export default function AppHeader() {
           >
             Team 59
           </Typography>
+          <nav>
+            <Link
+              variant="button"
+              color="textPrimary"
+              href="/files/report-team-59.pdf"
+              target="_blank"
+            >
+              Download a presentation of the final result
+            </Link>
+          </nav>
         </Toolbar>
       </AppBar>
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
@@ -61,7 +72,7 @@ export default function AppHeader() {
           component="p"
         >
           Géolocaliser les zones d'exclusion numérique de votre territoire -
-          avec l'indice de fragilité numérique - fait par la Team 59
+          avec l'indice de fragilité numérique
         </Typography>
       </Container>
     </>
