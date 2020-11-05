@@ -10,7 +10,7 @@ export default function IndicatorsGlobal({ city, population, globalScore }) {
           Ville - Code postal
         </Typography>
         <Typography component="p" variant="h4" color="textSecondary">
-          {city.name}
+          {city.name} - {city.zipCode}
         </Typography>
       </Grid>
       <Grid item xs={12} sm={4} md={4}>

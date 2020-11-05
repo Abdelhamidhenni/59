@@ -11,19 +11,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const competences = {
-  administrative: 10,
-  numerique: 50,
-  administrativeDepartment: 5,
-  numeriqueDepartment: 5,
-  administrativeRegion: 5,
-  numeriqueRegion: 5
-};
-
-export default function Score({ type }) {
+export default function Score({ type, municipalityScore }) {
   const classes = useStyles();
+  const { competence } = municipalityScore;
+
   const getScoreAccordingToType = () => {
-    return competences[type];
+    return competence[type];
   };
   const score = getScoreAccordingToType();
   return (

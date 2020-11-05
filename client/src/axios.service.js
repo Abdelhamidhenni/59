@@ -11,6 +11,18 @@ export const fetchMunicipalities = async () => {
   }
 };
 
+export const fetchMunicipalityScore = async id => {
+  try {
+    const municipality = await axios.get(`/api/municipalities/${id}`, {
+      baseURL: window.location.origin
+    });
+    return municipality.data;
+  } catch (error) {
+    throw Error("Error during getting municipality score");
+  }
+};
+
 export default {
-  fetchMunicipalities
+  fetchMunicipalities,
+  fetchMunicipalityScore
 };

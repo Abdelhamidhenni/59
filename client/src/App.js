@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import axiosService, { fetchMunicipalities } from "./axios.service";
+import { fetchMunicipalities, fetchMunicipalityScore } from "./axios.service";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -24,14 +24,26 @@ function App() {
 
   const [citySelected, setCity] = React.useState({
     id: 1,
-    name: "L'Abergement-Clémenciat"
+    name: "L'Abergement-Clémenciat",
+    zipCode: "01001"
   });
 
   const [municipalities, setMunicipalities] = React.useState([]);
+  const [municipalityScore, setMunicipalityScore] = React.useState({
+    competence: {
+      administrative: 53,
+      numerique: 91,
+      global: 72
+    }
+  });
 
-  const handleCityChange = event => {
+  const handleCityChange = async event => {
     event.preventDefault();
     setCity(event.target.value);
+    const municipalityScore = await fetchMunicipalityScore(
+      event.target.value.id
+    );
+    setMunicipalityScore(municipalityScore);
   };
 
   useEffect(async () => {
@@ -63,7 +75,7 @@ function App() {
           population={20000}
           globalScore={80}
         />
-        <IndicatorsCard />
+        <IndicatorsCard municipalityScore={municipalityScore} />
       </Container>
     </div>
   );

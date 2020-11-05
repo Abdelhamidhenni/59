@@ -64,7 +64,7 @@ const indicatorsDetails = [
   {
     title: "Score global Compétences",
     subheader: "Compétences / Capacité",
-    type: "administrative", // à changer
+    type: "global",
     description: [
       "Identifier des territoires mal couverts par les réseaux ou dans lesquels des populations auront des difficultés financières à y accéder"
     ]
@@ -78,9 +78,8 @@ const indicatorsDetails = [
   }
 ];
 
-export default function IndicatorsCard() {
+export default function IndicatorsCard({ municipalityScore }) {
   const classes = useStyles();
-
   return (
     <Container maxWidth="md" component="main">
       <Grid container spacing={5} alignItems="flex-end">
@@ -101,7 +100,10 @@ export default function IndicatorsCard() {
                 className={classes.cardHeader}
               />
               <CardContent>
-                <Score type={indicator.type} />
+                <Score
+                  type={indicator.type}
+                  municipalityScore={municipalityScore}
+                />
                 <ul>
                   {indicator.description.map(line => (
                     <Typography

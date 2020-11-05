@@ -65,15 +65,17 @@ export class MunicipalitiesService {
     const partSenion = senior / population;
     const partNoDiploma = noDiploma / population;
 
-    const administrative =
+    const administrative = Math.round(
       (((partUnemployed - thresholdUnemployed) / thresholdUnemployed + 1) * 100 +
         ((partYoung - thresholdYoung) / thresholdYoung + 1) * 100) /
-      2;
+        2,
+    );
 
-    const numerique =
+    const numerique = Math.round(
       (((partNoDiploma - thresholdNoDiploma) / thresholdNoDiploma + 1) * 100 +
         ((partSenion - thresholdSenior) / thresholdSenior + 1) * 100) /
-      2;
+        2,
+    );
 
     return {
       competence: {
