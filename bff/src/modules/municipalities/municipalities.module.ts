@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Department } from 'src/modules/departments/department.entity';
-import { Region } from 'src/modules/regions/region.entity';
+import { Department } from '../departments/department.entity';
+import { Region } from '../regions/region.entity';
 import { MunicipalitiesController } from './municipalities.controller';
 import { MunicipalitiesService } from './municipalities.service';
 import { Municipality } from './municipality.entity';

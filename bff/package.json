@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.ts\"",
     "seed": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed",
     "start:dev": "nodemon --config nodemon-dev.json",
-    "start": "node dist/src/main.js",
+    "start": "yarn build && node dist/src/main.js",
     "test": "jest --passWithNoTests",
     "test:ci": "jest --coverage --ci --forceExit --detectOpenHandles --runInBand",
     "test:coverage": "jest --coverage --passWithNoTests",

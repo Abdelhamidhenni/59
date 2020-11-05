@@ -18,6 +18,7 @@
   },
   "include": [
     "src",
+    "modules",
     "test"
   ],
   "exclude": [

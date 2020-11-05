@@ -5,6 +5,6 @@
     "sourceMap": false,
     "outDir": "./dist/src"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/modules/*"],
   "exclude": ["src/**/*.spec.ts"]
 }

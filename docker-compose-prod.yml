@@ -14,28 +14,11 @@ services:
       - "DEBUG=app:*"
       - DEBUG_COLORS=true
     depends_on: []
-  client:
-    image: "node:12-alpine"
-    user: node
-    environment:
-      - NODE_ENV=development
-      - "DEBUG=app:*"
-      - DEBUG_COLORS=true
-      - PORT=8080
-      - BROWSER=none
-      - CHOKIDAR_USEPOLLING=true
-    command: yarn start
-    volumes:
-      - "./client:/home/node/app:cached"
-    working_dir: /home/node/app
-    ports:
-      - "8080:8080"
-      - "9229:9229"
-      - "35729:35729"
+
   bff:
     image: node:12-alpine
     user: node
-    command: "yarn start:dev"
+    command: "yarn start"
     working_dir: /home/node/app
     ports:
       - 3000:3000
@@ -73,5 +56,4 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - client
       - bff
