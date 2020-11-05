@@ -42,11 +42,9 @@ function App() {
 
   const [municipalities, setMunicipalities] = React.useState([]);
   const [municipalityScore, setMunicipalityScore] = React.useState({
-    competence: {
-      administrative: 53,
-      numerique: 91,
-      global: 72
-    }
+    administrativeCompetence: 53,
+    numericCompetence: 91,
+    globalCompetence: 72
   });
   const searchMunicipalities = async event => {
     if (!event.target.value || event.target.value.length < 3) {

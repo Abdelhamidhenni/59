@@ -13,10 +13,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function Score({ type, municipalityScore }) {
   const classes = useStyles();
-  const { competence } = municipalityScore;
 
   const getScoreAccordingToType = () => {
-    return competence[type];
+    return municipalityScore[type];
   };
   const score = getScoreAccordingToType();
   return (

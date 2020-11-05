@@ -57,22 +57,13 @@ export default function AppHeader() {
       </AppBar>
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <Typography
-          component="h1"
-          variant="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-        >
-          Design4Green
-        </Typography>
-        <Typography
           variant="h5"
           align="center"
-          color="textSecondary"
+          color="textPrimary"
           component="p"
         >
-          Géolocaliser les zones d'exclusion numérique de votre territoire -
-          avec l'indice de fragilité numérique
+          Géolocaliser les zones d'exclusion numérique de votre territoire avec
+          l'indice de fragilité numérique
         </Typography>
       </Container>
     </>
