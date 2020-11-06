@@ -1,3 +1,5 @@
+const { departmentList } = require('./formaters');
+
 const formatComEvolStructPop = (element) => ({
   population: Math.round(element.P16_POP),
   senior: Math.round(element.P16_POP65P),
@@ -67,11 +69,55 @@ const formatRegMenage = (element) => ({
   id: element.REG,
 });
 
+const servicePubParser = (servicePubData) => {
+  const comServicePub = servicePubData.reduce((acc, datum) => {
+    const zipString = datum.ZIP.toString();
+    const zipCode = zipString.length <= 5 ? zipString : `0${zipString}`;
+    const index = acc.findIndex((el) => el.zipCode === zipCode);
+    if (index >= 0) {
+      const value = acc[index];
+      acc[index] = {
+        ...value,
+        count: value.count + 1,
+      };
+    } else {
+      acc.push({ zipCode, count: 1 });
+    }
+    return acc;
+  }, []);
+
+  const regServicePub = comServicePub.reduce((acc, datum) => {
+    let departmentId = datum.zipCode.slice(0, 2);
+    departmentId = departmentId === '20' ? '2A' : departmentId;
+    departmentId = departmentId === '97' ? datum.zipCode.slice(0, 3) : departmentId;
+    departmentId = departmentId === '977' || departmentId === '978' ? '974' : departmentId;
+    const department = departmentList.find(({ id }) => id === departmentId);
+    const regionId = department ? department.regionId : null;
+
+    if (regionId) {
+      const index = acc.findIndex((el) => el.id === regionId);
+      if (index >= 0) {
+        const value = acc[index];
+        acc[index] = {
+          ...value,
+          count: value.count + 1,
+        };
+      } else {
+        acc.push({ id: regionId, count: 1 });
+      }
+    }
+
+    return acc;
+  }, []);
+
+  return { comServicePub, regServicePub };
+};
+
 const couvCommuneParser = (couvCommuneData) => {
   const comCouvCommune = couvCommuneData.map((el) => formatComCommuneCouv(el));
 
   const regCouvCommuneTotal = comCouvCommune.reduce((acc, datum) => {
-    const index = acc.findIndex((el) => el.regionId === datum.regionId);
+    const index = acc.findIndex((el) => el.id === datum.regionId);
     if (index >= 0) {
       const value = acc[index];
       acc[index] = {
@@ -79,15 +125,15 @@ const couvCommuneParser = (couvCommuneData) => {
         couv: value.couv + datum.couv,
       };
     } else {
-      acc.push({ regionId: datum.regionId, couv: datum.couv });
+      acc.push({ id: datum.regionId, couv: datum.couv });
     }
     return acc;
   }, []);
 
-  const regCouvCommune = regCouvCommuneTotal.map(({ regionId, couv }) => {
-    const citiesCount = comCouvCommune.filter(({ regionId: id }) => id === regionId).length;
+  const regCouvCommune = regCouvCommuneTotal.map(({ id, couv }) => {
+    const citiesCount = comCouvCommune.filter(({ regionId }) => id === regionId).length;
     return {
-      regionId,
+      id,
       couv: couv / citiesCount,
     };
   });
@@ -265,3 +311,4 @@ exports.baseCcFilosofiParser = baseCcFilosofiParser;
 exports.metropoleSitesParser = metropoleSitesParser;
 exports.couvCommuneParser = couvCommuneParser;
 exports.menageParser = menageParser;
+exports.servicePubParser = servicePubParser;

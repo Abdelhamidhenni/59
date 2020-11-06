@@ -123,13 +123,14 @@ const departmentList = [
   { id: '976', name: 'Mayotte', regionId: '06' },
 ];
 
-const getScores = (esp, df, cbcf, ms, cc, men, regEsp, regDf, regBcf, regMs, regCc, regMen) => {
+const getScores = (esp, df, cbcf, ms, cc, men, sp, regEsp, regDf, regBcf, regMs, regCc, regMen, regSp) => {
   const thresholdUnemployed = regEsp.unemployed / regEsp.population;
   const thresholdYoung = regEsp.young / regEsp.population;
   const thresholdSenior = regEsp.senior / regEsp.population;
   const thresholdNoDiploma = regDf.noDiploma / regEsp.population;
   const thresholdAlone = regMen.alone / regMen.menages;
   const thresholdMono = regMen.mono / regMen.menages;
+  const thresholdSp = regSp.count / regEsp.population;
 
   const partUnemployed = esp.unemployed / esp.population;
   const partYoung = esp.young / esp.population;
@@ -137,18 +138,20 @@ const getScores = (esp, df, cbcf, ms, cc, men, regEsp, regDf, regBcf, regMs, reg
   const partNoDiploma = df.noDiploma / esp.population;
   const partAlone = men.alone / men.menages;
   const partMono = men.mono / men.menages;
+  const partSp = sp ? sp.count / esp.population : 0;
 
   const poverty = cbcf && regBcf ? ((cbcf.poverty - regBcf.poverty) / regBcf.poverty + 1) * 100 : 0;
   const livingStandard =
-    cbcf && regBcf ? ((cbcf.livingStandard - regBcf.livingStandard) / regBcf.livingStandard + 1) * 100 : 0;
+    cbcf && regBcf ? ((regBcf.livingStandard - cbcf.livingStandard) / regBcf.livingStandard + 1) * 100 : 0;
   const twogCover = ms && regMs ? ((1 - ms.twogCover) / regMs.twogCover) * 100 : 0;
-  const hdCover = cc && regCc ? ((1 - cc.couv) / regMs.couv) * 100 : 0;
+  const hdCover = cc && regCc ? ((1 - cc.couv) / regCc.couv) * 100 : 0;
 
   const interfaceAccess = Math.round((poverty + livingStandard + twogCover + hdCover) / 4);
 
   const informationAccess = Math.round(
     (((partAlone - thresholdAlone) / thresholdAlone + 1) * 100 +
-      ((partMono - thresholdMono) / thresholdMono + 1) * 100) /
+      ((partMono - thresholdMono) / thresholdMono + 1) * 100 +
+      Math.max(0, 2 - ((partSp - thresholdSp) / thresholdSp + 1)) * 100) /
       3,
   );
 
@@ -164,7 +167,7 @@ const getScores = (esp, df, cbcf, ms, cc, men, regEsp, regDf, regBcf, regMs, reg
       2,
   );
 
-  const globalAccess = Math.round((administrativeCompetence * 4 + numericCompetence * 3) / 7);
+  const globalAccess = Math.round((interfaceAccess * 4 + informationAccess * 3) / 7);
   const globalCompetence = Math.round((administrativeCompetence + numericCompetence) / 2);
   const globalScore = Math.round((globalAccess * 7 + globalCompetence * 4) / 11);
 
@@ -192,21 +195,27 @@ const getMunicipalities = (
   regCouvCommune,
   comMenageFormatted,
   regMenageFormatted,
+  comServicePub,
+  regServicePub,
 ) =>
   comEvolStructPopFormatted.map((esp) => {
+    // console.log('esp.regionId -> ', esp.regionId);
+
     const region = regionList.find(({ id }) => id === esp.regionId);
     const men = comMenageFormatted.find(({ zipCode }) => zipCode === esp.zipCode);
     const df = comDiplomesFormationFormatted.find(({ zipCode }) => zipCode === esp.zipCode);
     const cbcf = comBaseCcFilosofi.find(({ zipCode }) => zipCode === esp.zipCode);
     const ms = comMetropoleSites.find(({ zipCode }) => zipCode === esp.zipCode);
     const cc = comCouvCommune.find(({ zipCode }) => zipCode === esp.zipCode);
+    const sp = comServicePub.find(({ zipCode }) => zipCode === esp.zipCode);
     const regEsp = regEvolStructPopFormatted.find(({ id }) => id === esp.regionId);
     const regMen = regMenageFormatted.find(({ id }) => id === esp.regionId);
     const regDf = regDiplomesFormationFormatted.find(({ id }) => id === esp.regionId);
     const regBcf = regBaseCcFilosofi.find(({ id }) => id === esp.regionId);
     const regMs = regMetropoleSites.find(({ regionName }) => regionName === region.name);
     const regCc = regCouvCommune.find(({ id }) => id === esp.regionId);
-    const score = getScores(esp, df, cbcf, ms, cc, men, regEsp, regDf, regBcf, regMs, regCc, regMen);
+    const regSp = regServicePub.find(({ id }) => id === esp.regionId);
+    const score = getScores(esp, df, cbcf, ms, cc, men, sp, regEsp, regDf, regBcf, regMs, regCc, regMen, regSp);
     return {
       ...score,
       departmentId: esp.departmentId,
@@ -234,3 +243,4 @@ const getDepartments = () => departmentList;
 exports.getMunicipalities = getMunicipalities;
 exports.getRegions = getRegions;
 exports.getDepartments = getDepartments;
+exports.departmentList = departmentList;
